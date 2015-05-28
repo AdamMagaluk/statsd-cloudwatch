@@ -1,0 +1,64 @@
+{
+  "name": "statsd-cloudwatch-backend",
+  "description": "A StatsD backend for Amazon's AWS CloudWatch.",
+  "version": "0.2.3",
+  "author": {
+    "name": "Dylan Meissner",
+    "email": "dylanmei@gmail.com",
+    "url": "http://github.com/dylanmei"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dylanmei/statsd-cloudwatch-backend.git"
+  },
+  "main": "lib/init.js",
+  "dependencies": {
+    "fmt": "~0.4",
+    "underscore": "1.4.x",
+    "aws-sdk": "2.0.x"
+  },
+  "devDependencies": {
+    "chai": "~1.4.2",
+    "mocha": "*"
+  },
+  "optionalDependencies": {},
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "keywords": [
+    "aws",
+    "amazon",
+    "statsd",
+    "cloudwatch",
+    "backend"
+  ],
+  "readme": "# StatsD CloudWatch Backend\n\nThis is a pluggable backend for [StatsD](https://github.com/etsy/statsd). It publishes stats to [Amazon's AWS CloudWatch](http://aws.amazon.com/cloudwatch/).\n\n[![wercker status](https://app.wercker.com/status/58736e11e8e13ee79479cd1678cb2fb3/m \"wercker status\")](https://app.wercker.com/project/bykey/58736e11e8e13ee79479cd1678cb2fb3)\n\n*Counters*, *Gauges*, and *Timers* are supported. *Sets* are not implemented.\n\nBe aware that AWS CloudWatch metrics are not free and the cost can quickly become prohibative. *Pricing details: [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing/).* This may be a good choice if your needs are simple and/or as a means of quickly getting off the ground, as setting up [Graphite](http://graphite.wikidot.com/) in EC2 is not trivial.\n\n\n## Requirements\n\n* [StatsD deamon](https://npmjs.org/package/statsd) versions >= 0.7.0.\n* An [Amazon AWS](https://aws.amazon.com) account.\n\n## Installation\n\n    $ cd /path/to/statsd\n    $ npm install statsd-cloudwatch-backend\n\n\n## Configuration\n\nAdd `statsd-cloudwatch-backend` to the list of backends in the StatsD configuration file:\n\n    {\n        backends: [\"statsd-cloudwatch-backend\"]\n    }\n\nAdd the following basic configuration information to the StatsD configuration file.\n\n    {\n        cloudwatch: {\n            namespace:  \"my.api\",\n            region: \"us-west-2\",\n            dimensions: {},\n            accessKeyId:  \"<YOUR ACCESS KEY ID>\",\n            secretAccessKey: \"<YOUR SECRET ACCESS KEY>\"\n        }\n    }\n\nThe *namespace*, and *region* settings are required. The *dimensions* map is optional. The *accessKeyId* and *secretAccessKey* settings are not required if the EC2 instance is configured with an instance-profile with permissions to write to CloudWatch.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/dylanmei/statsd-cloudwatch-backend/issues"
+  },
+  "_id": "statsd-cloudwatch-backend@0.2.3",
+  "dist": {
+    "shasum": "0d7461141208a447d307c0c27b18d7026aa0348b",
+    "tarball": "http://registry.npmjs.org/statsd-cloudwatch-backend/-/statsd-cloudwatch-backend-0.2.3.tgz"
+  },
+  "_from": "statsd-cloudwatch-backend@*",
+  "_npmVersion": "1.3.8",
+  "_npmUser": {
+    "name": "dylanmei",
+    "email": "dylanmei@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "dylanmei",
+      "email": "dylanmei@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "0d7461141208a447d307c0c27b18d7026aa0348b",
+  "_resolved": "https://registry.npmjs.org/statsd-cloudwatch-backend/-/statsd-cloudwatch-backend-0.2.3.tgz",
+  "homepage": "https://github.com/dylanmei/statsd-cloudwatch-backend"
+}
