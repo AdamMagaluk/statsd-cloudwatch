@@ -114,7 +114,7 @@ Optional Variables:
   keyNameSanitize: false,
   deleteGauges: true,
   deleteTimers: true,
-  deleteCounters: true
+  deleteCounters: true,
   cloudwatch: {
     namespace:  "test.app",
     region: "us-east-1",
