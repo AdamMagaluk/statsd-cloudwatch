@@ -14,6 +14,20 @@ function parseKey(key) {
   return { key: parsed.pathname, dimensions: parsed.query};
 }
 
+function extend(a, b) {
+  console.log(a, b);
+  var ret = {};
+  Object.keys(a).forEach(function(k) {
+    ret[k] = a[k];
+  });
+
+  Object.keys(b).forEach(function(k) {
+    ret[k] = b[k];
+  });
+
+  return ret;
+};
+
 var Backend = module.exports = function(options, time, binder, logger) {
   options = _.defaults(options || {}, {
     client:     new AWS.CloudWatch(),
@@ -85,7 +99,7 @@ function collect_timers(date, timers, dimensions) {
     }
 
     metrics.push({ MetricName: parsed.key, StatisticValues: values, Unit: 'Milliseconds',
-      Timestamp: date, Dimensions: list_dimensions(_.extend(dimensions, parsed.dimensions))
+      Timestamp: date, Dimensions: list_dimensions(extend(dimensions, parsed.dimensions))
     })
   }
 
@@ -98,7 +112,7 @@ function collect_counters(date, counters, dimensions) {
     var value = counters[key]
     var parsed = parseKey(key);
     metrics.push({ MetricName: parsed.key, Value: value, Unit: 'Count',
-      Timestamp: date, Dimensions: list_dimensions(_.extend(dimensions, parsed.dimensions))
+      Timestamp: date, Dimensions: list_dimensions(extend(dimensions, parsed.dimensions))
     })
   }
 
@@ -111,7 +125,7 @@ function collect_gauges(date, gauges, dimensions) {
     var value = gauges[key];
     var parsed = parseKey(key);
     metrics.push({ MetricName: parsed.key, Value: value, Unit: 'None',
-      Timestamp: date, Dimensions: list_dimensions(_.extend(dimensions, parsed.dimensions))
+      Timestamp: date, Dimensions: list_dimensions(extend(dimensions, parsed.dimensions))
     })
   }
   return metrics
