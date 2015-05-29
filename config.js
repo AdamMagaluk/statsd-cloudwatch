@@ -106,7 +106,7 @@ Optional Variables:
 */
 {
   port: 8125,
-
+  flushInterval: 30000,
   debug: true,
   dumpMessages: true,
 

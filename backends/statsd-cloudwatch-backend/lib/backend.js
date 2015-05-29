@@ -15,7 +15,6 @@ function parseKey(key) {
 }
 
 function extend(a, b) {
-  console.log(a, b);
   var ret = {};
   Object.keys(a).forEach(function(k) {
     ret[k] = a[k];
@@ -34,7 +33,8 @@ var Backend = module.exports = function(options, time, binder, logger) {
     dimensions: {},
     namespace:  'unknown',
     debug: false,
-    dumpMessages: false
+    dumpMessages: false,
+    maxDataEntries: 20
   })
 
   l = logger || noopLogger
@@ -44,6 +44,7 @@ var Backend = module.exports = function(options, time, binder, logger) {
   this.client = options.client;
   this.namespace = options.namespace;
   this.dimensions = options.dimensions;
+  this.maxDataEntries = options.maxDataEntries;
 
   this.stats = {
     last_flush: time,
@@ -66,15 +67,25 @@ _.extend(Backend.prototype, {
     if (data.length == 0)
       return
 
-    var params = {
-      Namespace: this.namespace,
-      MetricData: data
+    var chunk = this.maxDataEntries;
+    var groups = [];
+    for (var i=0,j=data.length; i<j; i+=chunk) {
+      groups.push(data.slice(i, i+chunk));
     }
+    
+    var self = this;
+    groups.forEach(function(group) {
+      var params = {
+        Namespace: self.namespace,
+        MetricData: group
+      }
 
-    var stats = this.stats
-    this.client.putMetricData(params, function(err, data) {
-      err ? report_error(err, stats) : report_success(params, stats)
-    })
+      var stats = self.stats
+      self.client.putMetricData(params, function(err, data) {
+        err ? report_error(err, stats) : report_success(params, stats)
+      });
+
+    });
   },
 
   status: function(callback) {
