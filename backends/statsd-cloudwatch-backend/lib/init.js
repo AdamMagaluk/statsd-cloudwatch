@@ -16,38 +16,41 @@ exports.init = function(startupTime, config, emitter, logger) {
     logger.log('cloudwatch config is missing "namespace"')
     return false
   }
-  if (!config.region) {
-    logger.log('cloudwatch config is missing "region"')
-    return false
-  }
 
-  AWS.config.update(config)
+  AWS.config.update(config);
   AWS.config.apiVersions = {
     cloudwatch: '2010-08-01',
+  };
+
+  getRegion(config, function(err, region) {
+    if (err) {
+      if (config.debug) {
+        logger.log('cloudwatch backend could not access meta-data service');
+      }
+    }
+
+    AWS.config.update({region: region });
+    startup(config, startupTime, emitter, logger);
+  });
+
+  return true;
+}
+
+function getRegion(options, callback) {
+  if (options.region) {
+    return callback(null, region);
   }
 
-  if (config.dimensions['InstanceId'] != '')
-    startup(config, startupTime, emitter, logger)
-  else {
-    var metadata = new AWS.MetadataService()
-    metadata.request('/latest/meta-data/instance-id', function(err, data) {
-      if (err) {
-        if (config.debug)
-          logger.log('cloudwatch backend could not access meta-data service: ' + err.code)
-
-        if (config.dumpMessages)
-          fmt.dump(err)
-      }
-
-      if (data) {
-        config.dimensions['InstanceId'] = data
-      }
- 
-      startup(config, startupTime, emitter, logger)
-    })
-  }
-
-  return true
+  var metadata = new AWS.MetadataService()
+  metadata.request('/latest/meta-data/placement/availability-zone', function(err, data) {
+    if (err) {
+      return callback(err);
+    }
+    
+    var x = data.split('-');
+    x[2] = x[2][0];
+    return callback(null, x.join('-'));
+  });
 }
 
 function startup(config, time, emitter, logger) {

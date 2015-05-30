@@ -5,7 +5,6 @@ ADD     . /
 WORKDIR /
 RUN     npm install
 
-ENV    PORT 8125
 EXPOSE 8125
 
 CMD        ["start"]
