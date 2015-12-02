@@ -36,7 +36,6 @@ var elasticTimerType;
 
 var elasticStats = {};
 
-
 var es_bulk_insert = function elasticsearch_bulk_insert(listCounters, listTimers, listTimerData, listGaugeData) {
 
       var indexDate = new Date();
@@ -86,7 +85,11 @@ var es_bulk_insert = function elasticsearch_bulk_insert(listCounters, listTimers
         innerPayload = '';
           for (statKey in listTimerData[key]){
             if (innerPayload) innerPayload += ',';
-            innerPayload += '"'+statKey+'":"'+listTimerData[key][statKey]+'"';
+            if (typeof listTimerData[key][statKey] === 'object') {
+              innerPayload += '"'+statKey+'":"'+JSON.stringify(listTimerData[key][statKey])+'"';
+            } else {
+              innerPayload += '"'+statKey+'":"'+listTimerData[key][statKey]+'"';
+            }
           }
         payload += innerPayload +'}'+"\n";
       }
