@@ -115,7 +115,9 @@ Optional Variables:
 
 {
   backends: ['./backends/statsd-elasticsearch-backend'],
-  debug: true,
+  debug: false,
+//  dumpMessages: true,
+  keyNameSanitize: false, // Needed for dimensions
   elasticsearch: {
     port: 9200,
     host: process.env.ELASTICSEARCH_HOST,
