@@ -15,19 +15,7 @@ curl -XPUT localhost:9200/_template/statsd-template -d '
                     "type": "long",
                     "index": "not_analyzed"
                 },
-                "ns": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "grp": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "tgt": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "act": {
+                "key": {
                     "type": "string",
                     "index": "not_analyzed"
                 }
@@ -43,19 +31,7 @@ curl -XPUT localhost:9200/_template/statsd-template -d '
                     "type": "long",
                     "index": "not_analyzed"
                 },
-                "ns": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "grp": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "tgt": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "act": {
+                "key": {
                     "type": "string",
                     "index": "not_analyzed"
                 }
@@ -71,19 +47,7 @@ curl -XPUT localhost:9200/_template/statsd-template -d '
                     "type": "long",
                     "index": "not_analyzed"
                 },
-                "ns": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "grp": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "tgt": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "act": {
+                "key": {
                     "type": "string",
                     "index": "not_analyzed"
                 }
@@ -94,7 +58,14 @@ curl -XPUT localhost:9200/_template/statsd-template -d '
             "properties": {
                 "@timestamp": {
                     "type": "date"
+                },     
+                "key": {
+                    "type": "string",
+                    "index": "not_analyzed"
                 },
+                "val": {
+                  "type": "object",
+                  "properties": {
                 "count_ps": {
                     "type": "float",
                     "index": "not_analyzed"
@@ -162,22 +133,8 @@ curl -XPUT localhost:9200/_template/statsd-template -d '
                 "bin_inf": {
                     "type": "integer",
                     "index": "not_analyzed"
-                },
-                "ns": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "grp": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "tgt": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "act": {
-                    "type": "string",
-                    "index": "not_analyzed"
+                }
+                  }
                 }
             }
         }

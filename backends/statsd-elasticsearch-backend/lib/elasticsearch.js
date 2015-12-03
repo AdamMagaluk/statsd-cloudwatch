@@ -86,7 +86,7 @@ var es_bulk_insert = function elasticsearch_bulk_insert(listCounters, listTimers
           for (statKey in listTimerData[key]){
             if (innerPayload) innerPayload += ',';
             if (typeof listTimerData[key][statKey] === 'object') {
-              innerPayload += '"'+statKey+'":"'+JSON.stringify(listTimerData[key][statKey])+'"';
+              innerPayload += '"'+statKey+'":'+JSON.stringify(listTimerData[key][statKey])+'';
             } else {
               innerPayload += '"'+statKey+'":"'+listTimerData[key][statKey]+'"';
             }
@@ -132,6 +132,7 @@ var es_bulk_insert = function elasticsearch_bulk_insert(listCounters, listTimers
         lg.log('ES payload:');
         lg.log(payload);
       }
+
       req.write(payload);
       req.end();
 }
