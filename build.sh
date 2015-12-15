@@ -1,4 +1,4 @@
 #!/bin/sh
 
-docker build -t adammagaluk/statsd-cloudwatch .
+docker build -t mdobson/statsd-elasticsearch .
 
