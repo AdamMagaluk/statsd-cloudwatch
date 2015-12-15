@@ -122,7 +122,7 @@ Optional Variables:
     port: 9200,
     host: process.env.ELASTICSEARCH_HOST,
     path: '/',
-    indexPrefix: 'statsd',
+    indexPrefix: process.env.INDEX_PREFIX || 'statsd',
     indexTimestamp: 'day',
     countType: 'counter',
     timerType: 'timer',
