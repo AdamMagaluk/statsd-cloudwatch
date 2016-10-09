@@ -38,7 +38,7 @@ exports.init = function(startupTime, config, emitter, logger) {
 
 function getRegion(options, callback) {
   if (options.region) {
-    return callback(null, region);
+    return callback(null, options.region);
   }
 
   var metadata = new AWS.MetadataService()
